@@ -1,0 +1,49 @@
+#! /bin/bash
+# 
+# Copyright (c) 2013, Joyent, Inc. All rights reserved.
+#
+# Joyent specific script for centos 
+# that are ran on each boot
+# this is called from /etc/rc.local
+
+# load common functions and vars
+. /lib/smartdc/lib_smartdc_scripts.cfg
+
+# DO NOT use lib_smartdc_fatal in here
+# You want the rest of the init script to run
+# instead use info with ERROR
+# this will show up in logs and on console
+
+# Centos 
+setup_centos() {
+  # CentOS does something interesting to the serial devices. 
+  # We run a dummy query
+  /lib/smartdc/mdata-get dummykey 2>&1 > /dev/null
+  if [[ -f /etc/udev/rules.d/70-persistent-net.rules ]] ; then
+    rm -f /etc/udev/rules.d/70-persistent-net.rules
+  fi
+  
+  interfaces=$(ifconfig -a | grep ^eth | awk '{print $1}')
+  
+  for i in ${interfaces[@]} ; do
+    ifdown $i
+    local config=/etc/sysconfig/network-scripts/ifcfg-$i
+    echo "DEVICE=\"$i\"" > $config
+    echo "ONBOOT=\"yes\"" >> $config
+    echo "BOOTPROTO=\"dhcp\"" >> $config
+    ifup $i
+    # Redhat is even worse, in that we have to send gratuitious
+    # arps for some reason to update the neighbouring cache
+    out=$(/lib/smartdc/send-arp-updates) 
+  done
+}
+
+# Start of Main
+setup_centos
+
+# scripts that can run on all systems
+(/lib/smartdc/set-root-authorized-keys)
+(/lib/smartdc/format-secondary-disk)
+(/lib/smartdc/run-user-script)
+
+exit 0
