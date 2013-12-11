@@ -1,0 +1,96 @@
+#!/bin/bash
+#
+# Copyright (c) 2013, Joyent, Inc. All rights reserved.
+#
+# Make a shar for upgrading one's guest tools.
+#
+
+if [[ -n "$TRACE" ]]; then
+    export PS4='[\D{%FT%TZ}] ${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+    set -o xtrace
+fi
+set -o errexit
+set -o pipefail
+
+
+TOP=$(cd $(dirname $0)/../ >/dev/null; pwd)
+BUILD=$TOP/build
+
+if [[ -z "$TIMESTAMP" ]]; then
+    TIMESTAMP=$(date -u "+%Y%m%dT%H%M%SZ")
+fi
+# Need GNU awk for multi-char arg to "-F".
+AWK=$((which gawk 2>/dev/null | grep -v "^no ") || which awk)
+GITDESCRIBE=g$(git describe --all --long --dirty | ${AWK} -F'-g' '{print $NF}')
+
+VERSION=$(grep '%define version' $TOP/me-centos.spec  | awk '{print $3}')
+NAME=centos-guest-tools-for-smartos
+OUT=$TOP/$NAME-$VERSION-$TIMESTAMP-$GITDESCRIBE.sh
+
+
+#---- support stuff
+
+function fatal
+{
+    echo "$0: fatal error: $*"
+    exit 1
+}
+
+function errexit
+{
+    [[ $1 -ne 0 ]] || exit 0
+    fatal "error exit status $1"
+}
+
+
+#---- mainline
+
+trap 'errexit $?' EXIT
+
+rm -rf $BUILD
+mkdir $BUILD
+cp -PR \
+    $TOP/etc \
+    $TOP/lib \
+    $TOP/tools/upgrade-guest-tools.sh \
+    $BUILD
+
+TMP=/var/tmp/$NAME
+
+(cat <<__EOF__
+#!/bin/sh
+#
+# This is installer to upgrade the guest tools for a CentOS
+# VM running in a SmartOS or SmartDataCenter hypervisor.
+#
+DISTRO=\$(grep -w '^Image' /etc/product 2>/dev/null | awk '{print \$2}')
+if [ "\$DISTRO" != "centos" ]; then
+    echo "\$0: error: can only run on a CentOS guest VM" >&2
+    exit 3
+fi
+
+echo "Extracting to temp directory ($TMP)."
+
+if [ \`pwd\` != '$TMP' ]; then
+    rm -rf $TMP
+    mkdir -p $TMP
+    cd $TMP
+fi
+__EOF__
+)> $OUT
+
+(cd $BUILD && shar $(ls) | grep -v '^exit 0'; cat <<EOF
+
+echo "Upgrading guest tools."
+bash ./upgrade-guest-tools.sh
+
+cd /var/tmp
+rm -rf $TMP
+
+exit 0
+EOF
+)>> $OUT
+
+echo created $OUT
+
+
