@@ -1,3 +1,14 @@
+#
+# Copyright (c) 2013, Joyent, Inc. All rights reserved.
+#
+#
+
+
+VERSION := $(shell grep '%define version' me-centos.spec | awk '{print $$3}')
+# Intentionally relying on info in .ssh/config.
+PUBLISH_HOST := download
+PUBLISH_RDIR := /shared/download/pub/guest-tools
+PUBLISH_LOC := $(PUBLISH_HOST):$(PUBLISH_RDIR)
 
 .PHONY: all
 all:
@@ -5,6 +16,12 @@ all:
 .PHONY: shar
 shar:
 	./tools/mk-guest-tools-shar
+
+.PHONY: publish
+publish:
+	ssh $(PUBLISH_HOST) mkdir $(PUBLISH_RDIR)
+	scp `ls centos-guest-tools-for-smartos-$(VERSION)-*.sh | tail -1` \
+		$(PUBLISH_LOC)/centos-guest-tools-for-smartos-$(VERSION).sh
 
 .PHONY: clean
 clean:
