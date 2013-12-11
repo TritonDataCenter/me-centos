@@ -23,6 +23,16 @@ publish:
 	scp `ls centos-guest-tools-for-smartos-$(VERSION)-*.sh | tail -1` \
 		$(PUBLISH_LOC)/centos-guest-tools-for-smartos-$(VERSION).sh
 
+# Ensure all version-carrying files have the same version.
+.PHONY: versioncheck
+versioncheck:
+	[[ $(VERSION) == `grep '^## ' CHANGES.md | head -1 | awk '{print $$2}'` ]]
+	[[ $(VERSION)  == `grep '^Image' lib/smartdc/product | awk '{print $$NF}'` ]]
+	@echo Version check ok.
+
+.PHONY: check
+check: versioncheck
+
 .PHONY: clean
 clean:
 	rm -rf build
