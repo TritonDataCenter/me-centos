@@ -81,6 +81,24 @@ if [ \`pwd\` != '$TMP' ]; then
     mkdir -p $TMP
     cd $TMP
 fi
+
+#
+# Some bare CentOS environments appear to be lacking basic UNIX tooling like
+# uudecode(1).  This temporary script allows the shar to unpack as usual:
+#
+mkdir -p $TMP/.temp_bin
+cat > $TMP/.temp_bin/uudecode << 'EOFTOOL'
+#!/usr/bin/python
+
+import uu
+import sys
+
+uu.decode(sys.stdin, quiet=True)
+EOFTOOL
+chmod 755 $TMP/.temp_bin/uudecode
+
+export PATH=$TMP/.temp_bin:\$PATH
+
 __EOF__
 )> $OUT
 
