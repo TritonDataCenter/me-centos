@@ -19,7 +19,7 @@ shar:
 
 .PHONY: publish
 publish:
-	ssh $(PUBLISH_HOST) mkdir $(PUBLISH_RDIR)
+	ssh $(PUBLISH_HOST) mkdir -p $(PUBLISH_RDIR)
 	scp `ls centos-guest-tools-for-smartos-$(VERSION)-*.sh | tail -1` \
 		$(PUBLISH_LOC)/centos-guest-tools-for-smartos-$(VERSION).sh
 
