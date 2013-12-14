@@ -33,3 +33,7 @@ exit 0
 /etc/acpi/events/powerbtn-acpi-support
 /lib/smartdc
 /opt/local/smartdc
+/usr/sbin/mdata-get
+/usr/sbin/mdata-list
+/usr/sbin/mdata-put
+/usr/sbin/mdata-delete

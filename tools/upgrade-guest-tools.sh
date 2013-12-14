@@ -42,21 +42,26 @@ if [[ "$DISTRO" != "centos" ]]; then
 fi
 
 # Sanity check
-[[ ! -f ./lib/smartdc/mdata-get ]] \
+[[ ! -f ./usr/sbin/mdata-put ]] \
     && fatal "cwd, $(pwd), does not look like a guest tools build"
 
 updated=
-for file in $(find etc lib -type f); do
+for file in $(find etc lib usr -type f); do
     src=./$file
     dst=/$file
     if [[ ! -f $dst || -n "$(diff $dst $src || true)" ]]; then
         echo "update '$dst'"
         dstdir=$(dirname $dst)
         [[ ! -d $dstdir ]] && mkdir -p $dstdir
-        cp -rP $src $dst
+        cp -P $src $dst
         updated="$updated $dst"
     fi
 done
+if [[ ! -L /lib/smartdc/mdata-get ]]; then
+    rm -f /lib/smartdc/mdata-get
+    ln -s /usr/sbin/mdata-get /lib/smartdc/mdata-get
+    updated="$updated /lib/smartdc/mdata-get"
+fi
 if [[ -z "$updated" ]]; then
     echo "Up-to-date. No guest tools files were updated."
 fi

@@ -2,6 +2,9 @@
 
 ## 2.5.1 (not yet released)
 
+- IMGAPI-370 Move mdata-* tools to "/usr/sbin". For bwcompat there is a
+  "/lib/smartdc/mdata-get" symlink.
+
 - `make shar` to build a shar for upgrading the guest tools in one's
   CentOS VM. Builds of these will be provided on
   <https://download.joyent.com/pub/guest-tools>.
