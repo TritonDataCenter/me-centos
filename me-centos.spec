@@ -37,3 +37,7 @@ exit 0
 /usr/sbin/mdata-list
 /usr/sbin/mdata-put
 /usr/sbin/mdata-delete
+/usr/share/man/man1/mdata-get.1
+/usr/share/man/man1/mdata-list.1
+/usr/share/man/man1/mdata-put.1
+/usr/share/man/man1/mdata-delete.1
