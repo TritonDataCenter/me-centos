@@ -2,6 +2,9 @@
 
 ## 2.5.1 (not yet released)
 
+- Includes [mdata-client sha
+  e50077c](https://github.com/joyent/mdata-client/commit/e50077c) builds.
+
 - IMGAPI-370 Move mdata-* tools to "/usr/sbin". For bwcompat there is a
   "/lib/smartdc/mdata-get" symlink.
 
