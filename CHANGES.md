@@ -16,6 +16,12 @@
   New the 'mdata-*' tools, adding mdata-list, mdata-put and mdata-delete.
   Also adds support for an 'operator-script' run at boot time.
 
+- Removed /opt/local/smartdc. This was for Joyent Public Cloud use only, 
+  but is no longer required. This should not affect users of the image 
+  since /opt/local would not be in their PATH. Instuctions for installing
+  the CLoudAPI CLI can be found here: 
+  http://apidocs.joyent.com/cloudapi/#getting-started
+
 ## 2.5.0
 
 Change log started for this version.
