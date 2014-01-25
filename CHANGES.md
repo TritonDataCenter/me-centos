@@ -22,6 +22,10 @@
   the CLoudAPI CLI can be found here: 
   http://apidocs.joyent.com/cloudapi/#getting-started
 
+- Made scripts in /lib/smartdc executable (chmod 755)
+
+- Updated CentOS version in lib/smartdc/product to 6.5. 6.4 is deprecated
+
 ## 2.5.0
 
 Change log started for this version.
