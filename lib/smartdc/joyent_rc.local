@@ -36,6 +36,12 @@ setup_centos() {
     # arps for some reason to update the neighbouring cache
     out=$(/lib/smartdc/send-arp-updates)
   done
+
+  # Make sure hostid is properly set
+  if [[ $(/usr/bin/hostid) == "00000000" ]] ; then
+    lib_smartdc_info "hostid is 00000000. Setting it to a unique value via genhostid..."
+    /sbin/genhostid
+  fi
 }
 
 # Start of Main
