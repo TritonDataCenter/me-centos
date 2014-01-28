@@ -26,6 +26,9 @@
 
 - Updated CentOS version in lib/smartdc/product to 6.5. 6.4 is deprecated
 
+- Added fix for IMAGE-441: "No /etc/hostid generated on linux images".
+  A unique hostid is generated at boot if hostid returns 00000000. 
+
 ## 2.5.0
 
 Change log started for this version.
