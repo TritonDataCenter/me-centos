@@ -1,6 +1,6 @@
 # me-centos changelog
 
-## 2.5.1 (not yet released)
+## 2.6.0 (not yet released)
 
 - Includes [mdata-client sha
   e50077c](https://github.com/joyent/mdata-client/commit/e50077c) builds.
