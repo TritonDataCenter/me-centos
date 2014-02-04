@@ -50,8 +50,8 @@ else
   lib_smartdc_info "no data disk is mounted"
 fi
 
-partexists=$($SFDISK -l $DATA_DISK_DEV 2>/dev/null | grep "${DATA_DISK_DEV}1" | awk '{print $8}')
-if [ "$partexists" != "" ] ; then
+partexists=$($SFDISK -l $DATA_DISK_DEV 2>/dev/null | grep "${DATA_DISK_DEV}1" | awk '{print $NF}')
+if [ -n "$partexists" ] ; then
    if [[ -n "$DEBUG" ]]; then
       lib_smartdc_debug "partition table already exists. skipping."
    else 
