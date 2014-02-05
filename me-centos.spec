@@ -1,5 +1,5 @@
 %define name me-centos
-%define version 2.5.1
+%define version 2.6.0
 %define release 1
 
 Name: me-centos	

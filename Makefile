@@ -27,7 +27,6 @@ publish:
 .PHONY: versioncheck
 versioncheck:
 	[[ $(VERSION) == `grep '^## ' CHANGES.md | head -1 | awk '{print $$2}'` ]]
-	[[ $(VERSION)  == `grep '^Image' lib/smartdc/product | awk '{print $$NF}'` ]]
 	@echo Version check ok.
 
 .PHONY: check
