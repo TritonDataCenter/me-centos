@@ -49,7 +49,9 @@ setup_centos
 
 # scripts that can run on all systems
 (/lib/smartdc/set-root-authorized-keys)
-(/lib/smartdc/firstboot)
+if [[ -f /lib/smartdc/firstboot ]] ; then
+  (/lib/smartdc/firstboot)
+fi
 (/lib/smartdc/run-operator-script)
 (/lib/smartdc/run-user-script)
 
