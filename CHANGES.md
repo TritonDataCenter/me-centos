@@ -27,7 +27,16 @@
 - Updated CentOS version in lib/smartdc/product to 6.5. 6.4 is deprecated
 
 - Added fix for IMAGE-441: "No /etc/hostid generated on linux images".
-  A unique hostid is generated at boot if hostid returns 00000000. 
+  A unique hostid is generated at boot if hostid returns 00000000.
+
+- Fix awk command in format-secondary-disk to print the last field to
+  address issue of whether the bootable flag is set or not. See IMAGE-446
+
+- Removed unnecessary (and danger prone) debug logic and removed redundant
+  exit code from format-secondary-disk. See IMAGE-446 
+
+- Add firstboot script and logic which calls format-secondary-disk to 
+  ensure it's only run once. See IMAGE-446 
 
 ## 07/xx/2013 - 2.5.0
 - Going back to basics
