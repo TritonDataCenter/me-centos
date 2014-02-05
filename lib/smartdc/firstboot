@@ -1,0 +1,17 @@
+#! /bin/bash
+
+# Copyright 2014, Joyent Inc. All rights reserved
+# For scripts that should be run on first boot only
+
+# load common functions and vars
+. /lib/smartdc/lib_smartdc_scripts.cfg
+
+# Format disk
+(/lib/smartdc/format-secondary-disk)
+
+
+# Disable once all scripts are run
+lib_smartdc_info "Disabling firstboot script"
+mv /lib/smartdc/firstboot /lib/smartdc/firstboot.completed
+
+exit 0

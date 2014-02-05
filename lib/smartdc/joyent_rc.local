@@ -49,7 +49,7 @@ setup_centos
 
 # scripts that can run on all systems
 (/lib/smartdc/set-root-authorized-keys)
-(/lib/smartdc/format-secondary-disk)
+(/lib/smartdc/firstboot)
 (/lib/smartdc/run-operator-script)
 (/lib/smartdc/run-user-script)
 
