@@ -31,7 +31,7 @@ checkformount() {
 
 # Start of Main
 
-lib_smartdc_info "Start of script"
+lib_smartdc_info "Start of $(basename $0) script"
 
 if [[ ! -e ${DATA_DISK_DEV} ]] ; then
   lib_smartdc_fatal "secondary disk '${DATA_DISK_DEV}' not found. exiting."

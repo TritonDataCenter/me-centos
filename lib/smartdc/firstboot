@@ -6,6 +6,8 @@
 # load common functions and vars
 . /lib/smartdc/lib_smartdc_scripts.cfg
 
+lib_smartdc_info "Start of $(basename $0) script"
+
 # Format disk
 (/lib/smartdc/format-secondary-disk)
 
