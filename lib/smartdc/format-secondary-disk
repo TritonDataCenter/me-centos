@@ -69,7 +69,7 @@ fi
 data_disk_size=$($PARTED -m $DATA_DISK_DEV unit MB print | grep "gpt" | cut -d: -f2 | tr -d MB)
 lib_smartdc_info "creating partition ${DATA_DISK_DEV}1 of ${data_disk_size}MB - ie. all of $DATA_DISK_DEV"
 
-(parted -s $DATA_DISK_DEV unit MB mkpart primary ext2 1 $data_disk_size)
+($PARTED -s $DATA_DISK_DEV unit MB mkpart primary ext2 1 $data_disk_size)
 if [[ $? -gt 0 ]]; then
    lib_smartdc_fatal "failed to make gpt partition on ${DATA_DISK_DEV} ( $? )"
 fi
