@@ -33,8 +33,8 @@ checkformount() {
 
 lib_smartdc_info "Start of script"
 
-if [[ ! -e $DATA_DISK_DEV ]] ; then
-  lib_smartdc_fatal "secondary disk '$DATA_DISK_DEV' not found. exiting."
+if [[ ! -e ${DATA_DISK_DEV} ]] ; then
+  lib_smartdc_fatal "secondary disk '${DATA_DISK_DEV}' not found. exiting."
 fi
 
 if [[ -z $SFDISK ]] ; then
@@ -51,7 +51,7 @@ else
 fi
 
 partexists=$($SFDISK -l $DATA_DISK_DEV 2>/dev/null | grep "${DATA_DISK_DEV}1" | awk '{print $NF}')
-if [ -n "$partexists" ] ; then
+if [[ -n "$partexists" ]] ; then
   lib_smartdc_fatal "partition table already exists. skipping."
 fi
 
