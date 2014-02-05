@@ -4,39 +4,31 @@
 
 - Includes [mdata-client sha
   e50077c](https://github.com/joyent/mdata-client/commit/e50077c) builds.
-
 - IMGAPI-370 Move mdata-* tools to "/usr/sbin". For bwcompat there is a
   "/lib/smartdc/mdata-get" symlink.
-
 - `make shar` to build a shar for upgrading the guest tools in one's
   CentOS VM. Builds of these will be provided on
   <https://download.joyent.com/pub/guest-tools>.
-
 - IMAGE-370 Update guest tools (/lib/smartdc/...) for image management.
   New the 'mdata-*' tools, adding mdata-list, mdata-put and mdata-delete.
   Also adds support for an 'operator-script' run at boot time.
-
 - Removed /opt/local/smartdc. This was for Joyent Public Cloud use only, 
   but is no longer required. This should not affect users of the image 
   since /opt/local would not be in their PATH. Instuctions for installing
   the CLoudAPI CLI can be found here: 
   http://apidocs.joyent.com/cloudapi/#getting-started
-
 - Made scripts in /lib/smartdc executable (chmod 755)
-
 - Updated CentOS version in lib/smartdc/product to 6.5. 6.4 is deprecated
-
+- Add firstboot script and logic which calls format-secondary-disk to 
+  ensure it's only run once. See IMAGE-446 
 - Added fix for IMAGE-441: "No /etc/hostid generated on linux images".
-  A unique hostid is generated at boot if hostid returns 00000000.
-
+  A unique hostid is now generated at firstboo via set-hostid.
 - Fix awk command in format-secondary-disk to print the last field to
   address issue of whether the bootable flag is set or not. See IMAGE-446
-
 - Removed unnecessary (and danger prone) debug logic and removed redundant
   exit code from format-secondary-disk. See IMAGE-446 
 
-- Add firstboot script and logic which calls format-secondary-disk to 
-  ensure it's only run once. See IMAGE-446 
+
 
 ## 07/xx/2013 - 2.5.0
 - Going back to basics
