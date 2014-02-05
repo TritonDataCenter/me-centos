@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2013, Joyent, Inc. All rights reserved.
+# Copyright (c) 2014, Joyent, Inc. All rights reserved.
 #
 # Upgrade CentOS guest tools. This is being run in the unshar'd
 # tmp dir on the CentOS guest.
@@ -44,6 +44,10 @@ fi
 # Sanity check
 [[ ! -f ./usr/sbin/mdata-put ]] \
     && fatal "cwd, $(pwd), does not look like a guest tools build"
+
+# This is an upgrade of an already booted Ubuntu, so ensure we have the
+# "first boot has been run" marker file.
+touch /lib/smartdc/.firstboot-complete-do-not-delete
 
 updated=
 for file in $(find etc lib usr -type f); do
