@@ -58,9 +58,6 @@ cp -PR \
 # The shar doesn't handle symlinks, so we reconstruct this
 # symlink in "upgrade-guest-tools.sh".
 rm $BUILD/lib/smartdc/mdata-get
-# The 'product' file includes the original image version. Don't
-# want to overwrite that.
-rm $BUILD/lib/smartdc/product
 # Add a stamp file to know exactly what build we have.
 echo "$VERSION-$TIMESTAMP-$GITDESCRIBE" >$BUILD/lib/smartdc/buildstamp
 
