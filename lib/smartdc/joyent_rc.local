@@ -36,12 +36,6 @@ setup_centos() {
     # arps for some reason to update the neighbouring cache
     out=$(/lib/smartdc/send-arp-updates)
   done
-
-  # Make sure hostid is properly set
-  if [[ $(/usr/bin/hostid) == "00000000" ]] ; then
-    lib_smartdc_info "hostid is 00000000. Setting it to a unique value via genhostid..."
-    /sbin/genhostid
-  fi
 }
 
 # Start of Main
@@ -49,7 +43,7 @@ setup_centos
 
 # scripts that can run on all systems
 (/lib/smartdc/set-root-authorized-keys)
-if [[ -f /lib/smartdc/firstboot ]] ; then
+if [[ ! -f /lib/smartdc/.firstboot-complete-do-not-delete ]] ; then
   (/lib/smartdc/firstboot)
 fi
 (/lib/smartdc/run-operator-script)
