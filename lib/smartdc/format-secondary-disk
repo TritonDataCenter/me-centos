@@ -1,8 +1,8 @@
 #! /bin/bash
 
 # Copyright 2014, Joyent Inc. All rights reserved
-# formats the secondary disk
-# also refered to as the /mnt disk
+# formats the secondary disk ( /dev/vdb1 )
+# also refered to as the /data disk
 
 # customers can provision this disk how they like
 # by default we provision the whole disk as one partition
