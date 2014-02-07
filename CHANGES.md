@@ -26,7 +26,9 @@
 - Fix awk command in format-secondary-disk to print the last field to
   address issue of whether the bootable flag is set or not. See IMAGE-446
 - Removed unnecessary (and danger prone) debug logic and removed redundant
-  exit code from format-secondary-disk. See IMAGE-446 
+  exit code from format-secondary-disk. See IMAGE-446
+- Added a fix for a race condition in format-secondary-disk preventing 
+  /data disk from being created. See IMAGE-453.
 
 
 
