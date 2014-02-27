@@ -18,11 +18,15 @@
 setup_centos() {
   # CentOS does something interesting to the serial devices.
   # We run a dummy query
-  /lib/smartdc/mdata-get dummykey 2>&1 > /dev/null
+  if [ ! -f $MDATA_GET_BIN ]; then
+     lib_smartdc_info "ERROR: File not found $MDATA_GET_BIN"
+  fi
+  
+  $MDATA_GET_BIN dummykey 2>&1 > /dev/null
   if [[ -f /etc/udev/rules.d/70-persistent-net.rules ]] ; then
     rm -f /etc/udev/rules.d/70-persistent-net.rules
   fi
-
+  
   interfaces=$(ifconfig -a | grep ^eth | awk '{print $1}')
 
   for i in ${interfaces[@]} ; do
@@ -34,7 +38,11 @@ setup_centos() {
     ifup $i
     # Redhat is even worse, in that we have to send gratuitious
     # arps for some reason to update the neighbouring cache
-    out=$(/lib/smartdc/send-arp-updates)
+    if [ -f $SEND_ARP_UPDATES_BIN ]; then 
+       out=$($SEND_ARP_UPDATES_BIN) 
+    else
+       lib_smartdc_info "ERROR: File not found $SEND_ARP_UPDATES_BIN"
+    fi
   done
 }
 
